@@ -277,8 +277,8 @@ void PlayMode::draw(glm::uvec2 const &drawable_size) {
 	// TODO: consider using the Light(s) in the scene to do this
 	glUseProgram(lit_color_texture_program->program);
 	glUniform1i(lit_color_texture_program->LIGHT_TYPE_int, 1);
-	glUniform3fv(lit_color_texture_program->LIGHT_DIRECTION_vec3, 1, glm::value_ptr(glm::vec3(0.0f, 0.0f,-1.0f)));
-	glUniform3fv(lit_color_texture_program->LIGHT_ENERGY_vec3, 1, glm::value_ptr(glm::vec3(1.0f, 1.0f, 0.95f)));
+	glUniform3fv(lit_color_texture_program->LIGHT_DIRECTION_vec3, 1, glm::value_ptr(glm::vec3(1.0f, 0.0f,0.0f)));
+	glUniform3fv(lit_color_texture_program->LIGHT_ENERGY_vec3, 1, glm::value_ptr(glm::vec3(1.5f, 1.5f, 1.45f)));
 	glUseProgram(0);
 
 	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
@@ -303,16 +303,16 @@ void PlayMode::draw(glm::uvec2 const &drawable_size) {
 		));
 
 		constexpr float H = 0.50f;
-		constexpr float hH = 0.1f;
-		lines.draw_text("Press A and D to move; Hold W to flip gravity; Don't crash",
-			glm::vec3(-aspect + 0.1f * hH, -1.0 + 0.1f * hH, 0.0),
-			glm::vec3(hH, 0.0f, 0.0f), glm::vec3(0.0f, hH, 0.0f),
-			glm::u8vec4(0x00, 0x00, 0x00, 0x00));
-		float ofs = 2.0f / drawable_size.y;
-		lines.draw_text("Press A and D to move; Hold W to flip gravity; Don't crash",
-			glm::vec3(-aspect + 0.1f * hH + ofs, -1.0 + + 0.1f * hH + ofs, 0.0),
-			glm::vec3(hH, 0.0f, 0.0f), glm::vec3(0.0f, hH, 0.0f),
-			glm::u8vec4(0xff, 0xff, 0xff, 0x00));
+		// constexpr float hH = 0.1f;
+		// lines.draw_text("Press A and D to move; Hold W to flip gravity; Don't crash",
+		// 	glm::vec3(-aspect + 0.1f * hH, -1.0 + 0.1f * hH, 0.0),
+		// 	glm::vec3(hH, 0.0f, 0.0f), glm::vec3(0.0f, hH, 0.0f),
+		// 	glm::u8vec4(0x00, 0x00, 0x00, 0x00));
+		// float ofs = 2.0f / drawable_size.y;
+		// lines.draw_text("Press A and D to move; Hold W to flip gravity; Don't crash",
+		// 	glm::vec3(-aspect + 0.1f * hH + ofs, -1.0 + + 0.1f * hH + ofs, 0.0),
+		// 	glm::vec3(hH, 0.0f, 0.0f), glm::vec3(0.0f, hH, 0.0f),
+		// 	glm::u8vec4(0xff, 0xff, 0xff, 0x00));
 		float y = -0.2;
 		float x = -aspect;
 		lines.draw_text(std::to_string(score),
