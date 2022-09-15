@@ -252,7 +252,7 @@ void PlayMode::draw(glm::uvec2 const &drawable_size) {
 		));
 
 		constexpr float H = 0.50f;
-		float y = -0.2;
+		float y = -0.2f;
 		float x = -aspect;
 		lines.draw_text(std::to_string(score),
 			glm::vec3(x + 0.1f * H, y + 0.1f * H, 0.0),
