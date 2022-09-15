@@ -150,7 +150,8 @@ void PlayMode::update(float elapsed) {
 			RoadSpeed = 15.0f;
 		constexpr float FlipDist = 4.2f;
 		float CarFlipDist = FlipDist - 1.0f;
-		srand (time(NULL));
+		// From srand man page : https://cplusplus.com/reference/cstdlib/rand/
+		srand ((unsigned int)time(NULL));
 
 		prevIsUp = isUp;
 
@@ -169,7 +170,7 @@ void PlayMode::update(float elapsed) {
 
 				transform.position.y += RoadSpeed * elapsed;
 				if (transform.position.y > 19.0f)
-					transform.position.y = -(61.6127);
+					transform.position.y = -(61.6127f);
 				if (up.pressed && !isUp) {
 					transform.position.z += FlipDist;
 				} else if (!up.pressed && isUp){
