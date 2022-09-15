@@ -54,14 +54,6 @@ PlayMode::PlayMode() : scene(*runner_scene) {
 		// else if (transform.name == "LowerLeg.FL") lower_leg = &transform;
 	}
 	if (car == nullptr) throw std::runtime_error("Car not found.");
-	// if (player == nullptr) throw std::runtime_error("Player Objects not found.");
-	// if (upper_leg == nullptr) throw std::runtime_error("Upper leg not found.");
-	// if (lower_leg == nullptr) throw std::runtime_error("Lower leg not found.");
-
-	// hip_base_rotation = hip->rotation;
-	// upper_leg_base_rotation = upper_leg->rotation;
-	// lower_leg_base_rotation = lower_leg->rotation;
-	// player_base_rotation = player->rotation;
 	car_base_rotation = car->rotation;
 
 	//get pointer to camera for convenience:
@@ -117,15 +109,6 @@ bool PlayMode::handle_event(SDL_Event const &evt, glm::uvec2 const &window_size)
 		}
 	} else if (evt.type == SDL_MOUSEMOTION) {
 		if (SDL_GetRelativeMouseMode() == SDL_TRUE) {
-			// glm::vec2 motion = glm::vec2(
-			// 	evt.motion.xrel / float(window_size.y),
-			// 	-evt.motion.yrel / float(window_size.y)
-			// );
-			// camera->transform->rotation = glm::normalize(
-			// 	camera->transform->rotation
-			// 	* glm::angleAxis(-motion.x * camera->fovy, glm::vec3(0.0f, 1.0f, 0.0f))
-			// 	* glm::angleAxis(motion.y * camera->fovy, glm::vec3(1.0f, 0.0f, 0.0f))
-			// );
 			return true;
 		}
 	}
@@ -134,23 +117,6 @@ bool PlayMode::handle_event(SDL_Event const &evt, glm::uvec2 const &window_size)
 }
 
 void PlayMode::update(float elapsed) {
-
-	//slowly rotates through [0,1):
-	wobble += elapsed / 10.0f;
-	wobble -= std::floor(wobble);
-
-	// hip->rotation = hip_base_rotation * glm::angleAxis(
-	// 	glm::radians(5.0f * std::sin(wobble * 2.0f * float(M_PI))),
-	// 	glm::vec3(0.0f, 1.0f, 0.0f)
-	// );
-	// upper_leg->rotation = upper_leg_base_rotation * glm::angleAxis(
-	// 	glm::radians(7.0f * std::sin(wobble * 2.0f * 2.0f * float(M_PI))),
-	// 	glm::vec3(0.0f, 0.0f, 1.0f)
-	// );
-	// lower_leg->rotation = lower_leg_base_rotation * glm::angleAxis(
-	// 	glm::radians(10.0f * std::sin(wobble * 3.0f * 2.0f * float(M_PI))),
-	// 	glm::vec3(0.0f, 0.0f, 1.0f)
-	// );
 
 	//move camera:
 	{
@@ -168,11 +134,6 @@ void PlayMode::update(float elapsed) {
 
 		//make it so that moving diagonally doesn't go faster:
 		if (move != glm::vec2(0.0f)) move = glm::normalize(move) * PlayerSpeed * elapsed;
-
-		// glm::mat4x3 frame = car->make_local_to_parent();
-		// glm::vec3 frame_right = frame[0];
-		// glm::vec3 frame_up = frame[1];
-		// glm::vec3 frame_forward = -frame[2];
 
 		// car->position += move.x * frame_up + move.y * frame_forward;
 		float new_pos = car->position.x;
@@ -236,19 +197,6 @@ void PlayMode::update(float elapsed) {
 						score += 1;
 					transform.position.y = -((rand() % 1000) + 10.0f);
 				}
-				// if (isUp != prevIsUp) {
-				// 	if (isUp) {
-				// 		if (transform.name[6] == 'L')
-				// 			transform.position.z += FlipDist;
-				// 		else
-				// 			transform.position.z -= FlipDist;
-				// 	} else {
-				// 		if (transform.name[6] == 'L')
-				// 			transform.position.z -= FlipDist;
-				// 		else
-				// 			transform.position.z += FlipDist;
-				// 	}
-				// }
 			}
 		}
 
@@ -303,16 +251,6 @@ void PlayMode::draw(glm::uvec2 const &drawable_size) {
 		));
 
 		constexpr float H = 0.50f;
-		// constexpr float hH = 0.1f;
-		// lines.draw_text("Press A and D to move; Hold W to flip gravity; Don't crash",
-		// 	glm::vec3(-aspect + 0.1f * hH, -1.0 + 0.1f * hH, 0.0),
-		// 	glm::vec3(hH, 0.0f, 0.0f), glm::vec3(0.0f, hH, 0.0f),
-		// 	glm::u8vec4(0x00, 0x00, 0x00, 0x00));
-		// float ofs = 2.0f / drawable_size.y;
-		// lines.draw_text("Press A and D to move; Hold W to flip gravity; Don't crash",
-		// 	glm::vec3(-aspect + 0.1f * hH + ofs, -1.0 + + 0.1f * hH + ofs, 0.0),
-		// 	glm::vec3(hH, 0.0f, 0.0f), glm::vec3(0.0f, hH, 0.0f),
-		// 	glm::u8vec4(0xff, 0xff, 0xff, 0x00));
 		float y = -0.2;
 		float x = -aspect;
 		lines.draw_text(std::to_string(score),
